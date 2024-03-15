@@ -8,6 +8,7 @@ export const createUrl = async (
   try {
     console.log("The fullUrl is :", req.body.fullUrl);
     const { fullUrl } = req.body;
+    console.log(fullUrl);
 
     const urlFound = await urlModel.find({ fullUrl });
     if (urlFound.length > 0) {
@@ -27,7 +28,7 @@ export const getAllUrl = async (
   res: express.Response
 ) => {
   try {
-    const shortUrls = await urlModel.find();
+    const shortUrls = await urlModel.find().sort({ createdAt: -1 });
     if (shortUrls.length < 0) {
       res.status(404).send({ message: "Short Urls not found!" });
     } else {
